@@ -21,6 +21,7 @@ import java.util.List;
  * @author zzx
  * @since 2021-04-10
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/edu/teacher")
 public class TeacherController {
@@ -48,7 +49,7 @@ public class TeacherController {
     @DeleteMapping("/{id}")
     public ResultTO deleteTeacher(@PathVariable String id) {
         boolean flag = teacherService.removeById(id);
-        return flag ? ResultTO.buildSuccess(null) : ResultTO.buildFailed(500, "删除失败");
+        return flag ? ResultTO.buildSuccess(null) : ResultTO.buildFailed("删除失败");
     }
 
     /**
@@ -110,7 +111,7 @@ public class TeacherController {
     @PostMapping("/addTeacher")
     public ResultTO addTeacher(@RequestBody Teacher teacher) {
         boolean flag = teacherService.save(teacher);
-        return flag ? ResultTO.buildSuccess(true) : ResultTO.buildFailed(500, "插入失败");
+        return flag ? ResultTO.buildSuccess(true) : ResultTO.buildFailed("插入失败");
     }
 
     /**
@@ -134,7 +135,7 @@ public class TeacherController {
     @PostMapping("/updateTeacher")
     public ResultTO updateTeacher(@RequestBody Teacher teacher) {
         boolean flag = teacherService.updateById(teacher);
-        return flag ? ResultTO.buildSuccess(true) : ResultTO.buildFailed(500, "更新失败");
+        return flag ? ResultTO.buildSuccess(true) : ResultTO.buildFailed("更新失败");
     }
 }
 

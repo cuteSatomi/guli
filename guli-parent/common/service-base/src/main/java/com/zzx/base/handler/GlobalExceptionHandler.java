@@ -16,6 +16,6 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(Exception.class)
     public ResultTO error(Exception e) {
-        return ResultTO.buildFailed(500, e.getMessage());
+        return ResultTO.buildFailed(e.getMessage());
     }
 }

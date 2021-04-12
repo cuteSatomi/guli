@@ -14,8 +14,8 @@ public class ResultTO<T> {
     private boolean success;
 
     /** 错误码 */
-    @ApiModelProperty(value = "错误码", required = true, example = "0001")
-    private Integer errorCode;
+    @ApiModelProperty(value = "状态码", required = true, example = "20000")
+    private Integer code;
 
     /** 错误提示 */
     @ApiModelProperty(value = "错误提示", required = true, example = "系统错误")
@@ -32,7 +32,7 @@ public class ResultTO<T> {
     public static <K> ResultTO<K> buildSuccess(K data) {
         ResultTO<K> result = new ResultTO<>();
         result.setSuccess(true);
-        result.setErrorCode(0);
+        result.setCode(ResultCode.SUCCESS);
         result.setData(data);
         return result;
     }
@@ -41,15 +41,15 @@ public class ResultTO<T> {
         ResultTO<K> result = new ResultTO<>();
         result.setSuccess(true);
         result.setMessage(message);
-        result.setErrorCode(0);
+        result.setCode(ResultCode.SUCCESS);
         result.setData(data);
         return result;
     }
 
-    public static <K> ResultTO<K> buildFailed(Integer code, String message) {
+    public static <K> ResultTO<K> buildFailed(String message) {
         ResultTO<K> result = new ResultTO<>();
         result.setSuccess(false);
-        result.setErrorCode(code);
+        result.setCode(ResultCode.ERROR);
         result.setMessage(message);
         return result;
     }

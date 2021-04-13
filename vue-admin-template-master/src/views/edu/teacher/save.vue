@@ -20,7 +20,32 @@
         <el-input v-model="teacher.intro" :rows="10" type="textarea"/>
       </el-form-item>
 
-      <!-- 讲师头像：TODO -->
+      <!-- 讲师头像 -->
+      <el-form-item label="讲师头像">
+        <!-- 头衔缩略图 -->
+        <pan-thumb :image="teacher.avatar"/>
+        <!-- 文件上传按钮 -->
+        <el-button type="primary" icon="el-icon-upload" @click="imagecropperShow=true">更换头像
+        </el-button>
+
+        <!--
+          v-show：是否显示上传组件
+          :key：类似于id，如果一个页面多个图片上传控件，可以做区分
+          :url：后台上传的url地址
+          @close：关闭上传组件
+          @crop-upload-success：上传成功后的回调
+          <input type="file" name="file"/>
+          -->
+        <image-cropper
+          v-show="imagecropperShow"
+          :width="300"
+          :height="300"
+          :key="imagecropperKey"
+          :url="BASE_API+'/edu/oss/upload'"
+          field="file"
+          @close="close"
+          @crop-upload-success="cropSuccess"/>
+      </el-form-item>
       <el-form-item>
         <el-button :disabled="saveBtnDisabled" type="primary" @click="saveOrUpdate">保存</el-button>
       </el-form-item>
@@ -30,9 +55,15 @@
 
 <script>
   import teacherApi from "@/api/edu/teacher";
+  import ImageCropper from '@/components/ImageCropper';
+  import PanThumb from '@/components/PanThumb';
 
   export default {
     name: "save",
+    components: {
+      ImageCropper,
+      PanThumb
+    },
     data() {
       return {
         teacher: {
@@ -43,6 +74,10 @@
           intro: '',
           avatar: ''
         },
+        imagecropperShow: false,        // 上传弹框组件是否显示
+        imagecropperKey: 0,             // 上传组件key值
+        BASE_API: process.env.BASE_API, // 获取dev.env.js里面地址
+
         saveBtnDisabled: false    // 保存按钮是否禁用
       }
     },
@@ -56,6 +91,17 @@
       }
     },
     methods: {
+      // 关闭头像上传框
+      close() {
+        this.imagecropperShow = false;
+        this.imagecropperKey = this.imagecropperKey + 1;
+      },
+      // 头像上传成功后回调的方法
+      cropSuccess(data) {
+        this.teacher.avatar = data;
+        this.imagecropperShow = false;
+        this.imagecropperKey = this.imagecropperKey + 1;
+      },
       // 页面的初始化方法
       init() {
         // 假如路径中包含id，则说明是更新讲师，需要根据id查询出讲师的信息

@@ -10,7 +10,7 @@ export default {
    */
   getTeacherListPage(current, size, teacherQuery) {
     return request({
-      url: `/edu/teacher/pageTeacherCondition/${current}/${size}`,
+      url: `/edu/service/teacher/pageTeacherCondition/${current}/${size}`,
       method: 'post',
       // data表示将teacherQuery转换为JSON传递到后端接口中
       data: teacherQuery
@@ -23,7 +23,7 @@ export default {
    */
   deleteTeacherById(id) {
     return request({
-      url: `/edu/teacher/${id}`,
+      url: `/edu/service/teacher/${id}`,
       method: 'delete'
     });
   },
@@ -34,7 +34,7 @@ export default {
    */
   addTeacher(teacher) {
     return request({
-      url: `/edu/teacher/addTeacher`,
+      url: `/edu/service/teacher/addTeacher`,
       method: 'post',
       data: teacher
     });
@@ -46,7 +46,7 @@ export default {
    */
   getTeacherById(id) {
     return request({
-      url: `/edu/teacher/getTeacherById/${id}`,
+      url: `/edu/service/teacher/getTeacherById/${id}`,
       method: 'get'
     });
   },
@@ -57,7 +57,7 @@ export default {
    */
   updateTeacher(teacher) {
     return request({
-      url: `/edu/teacher/updateTeacher`,
+      url: `/edu/service/teacher/updateTeacher`,
       method: 'post',
       data: teacher
     });

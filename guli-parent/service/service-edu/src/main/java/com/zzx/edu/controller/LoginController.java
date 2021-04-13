@@ -12,7 +12,7 @@ import java.util.Map;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/edu/user")
+@RequestMapping("/edu/service/user")
 public class LoginController {
     /**
      * 模拟登录功能

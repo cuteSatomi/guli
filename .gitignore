@@ -21,6 +21,8 @@ target/
 **/*.iml
 **/*.ipr
 
+**/OssConfig.java
+
 
 ### NetBeans ###
 /nbproject/private/

@@ -70,30 +70,21 @@ public class SubjectExcelListener extends AnalysisEventListener<SubjectData> {
             String levelOneTitle = dataEntry.getKey();
             // 根据一级分类查询
             Subject subjectOne = isExistLevelOne(levelOneTitle);
-            // 用于存放批量插入的二级分类
-            List<Subject> subjectTwoList = new ArrayList<>();
             if (subjectOne == null) {
                 // 如果当前要插入的一级分类不存在，则先插入一级分类，再根据一级分类插入二级分类
                 subjectOne = new Subject();
                 subjectOne.setParentId("0");
                 subjectOne.setTitle(levelOneTitle);
                 subjectService.save(subjectOne);
-
-                // 根据默认主键策略，插入完成后subjectOne对象中应该有id值，根据这个id值去插入二级分类
-                for (String levelTwoTitle : dataEntry.getValue()) {
-                    Subject subjectTwo = new Subject();
-                    subjectTwo.setTitle(levelTwoTitle);
-                    subjectTwo.setParentId(subjectOne.getId());
-                    subjectTwoList.add(subjectTwo);
-                }
-            }else {
-                // 如果已存在，则直接根据查询得到的id当作parent_id来插入
-                for (String levelTwoTitle : dataEntry.getValue()) {
-                    Subject subjectTwo = new Subject();
-                    subjectTwo.setTitle(levelTwoTitle);
-                    subjectTwo.setParentId(subjectOne.getId());
-                    subjectTwoList.add(subjectTwo);
-                }
+            }
+            // 用于存放批量插入的二级分类
+            List<Subject> subjectTwoList = new ArrayList<>();
+            // 不管是否存在当前一级分类，经过上面的if里面的存储之后，subjectOne肯定是不为null的
+            for (String levelTwoTitle : dataEntry.getValue()) {
+                Subject subjectTwo = new Subject();
+                subjectTwo.setTitle(levelTwoTitle);
+                subjectTwo.setParentId(subjectOne.getId());
+                subjectTwoList.add(subjectTwo);
             }
             // 批量插入
             subjectService.saveBatch(subjectTwoList);

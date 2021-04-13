@@ -2,6 +2,7 @@ package com.zzx.edu.service;
 
 import com.zzx.edu.entity.Subject;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
@@ -13,4 +14,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SubjectService extends IService<Subject> {
 
+    /**
+     * 读取excel文件
+     * @param file
+     */
+    void addSubject(MultipartFile file);
 }

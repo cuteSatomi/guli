@@ -1,5 +1,6 @@
 package com.zzx.base.handler;
 
+import com.zzx.base.exception.GuliException;
 import com.zzx.utils.ResultTO;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GlobalExceptionHandler {
 
     @ResponseBody
-    @ExceptionHandler(Exception.class)
-    public ResultTO error(Exception e) {
-        return ResultTO.buildFailed(e.getMessage());
+    @ExceptionHandler(GuliException.class)
+    public ResultTO error(GuliException e) {
+        return ResultTO.buildFailed(e.getMsg());
     }
 }

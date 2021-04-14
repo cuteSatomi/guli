@@ -60,6 +60,8 @@
           type: 'success',
           message: '添加课程分类成功'
         });
+        // 路由跳转到课程分类列表
+        this.$router.push({path: '/subject/list'});
       },
       //上传失败
       fileUploadError() {

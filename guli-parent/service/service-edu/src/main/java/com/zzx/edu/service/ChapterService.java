@@ -2,6 +2,9 @@ package com.zzx.edu.service;
 
 import com.zzx.edu.entity.Chapter;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zzx.edu.entity.vo.ChapterVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ChapterService extends IService<Chapter> {
 
+    /**
+     * 得到章节及其小节
+     * @param courseId
+     * @return
+     */
+    List<ChapterVO> getChapterVideoByCourseId(String courseId);
 }

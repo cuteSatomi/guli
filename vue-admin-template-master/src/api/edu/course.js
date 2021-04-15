@@ -20,5 +20,27 @@ export default {
       url: '/edu/service/teacher/findAll',
       method: 'get',
     });
+  },
+  /**
+   * 根据课程id得到课程信息
+   * @param courseId
+   */
+  getCourseInfo(courseId) {
+    return request({
+      url: `/edu/service/course/getCourseInfo/${courseId}`,
+      method: 'get'
+    });
+  },
+  /**
+   * 修改课程信息
+   * @param courseInfo
+   */
+  updateCourseInfo(courseInfo) {
+    return request({
+      url: `/edu/service/course/updateCourseInfo`,
+      method: 'post',
+      data: courseInfo
+    });
   }
+
 }

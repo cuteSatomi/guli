@@ -23,9 +23,21 @@ public class CourseController {
     private CourseService courseService;
 
     @PostMapping("/addCourseInfo")
-    public ResultTO addCourseInfo(@RequestBody CourseVO courseVO){
+    public ResultTO addCourseInfo(@RequestBody CourseVO courseVO) {
         String id = courseService.addCourseInfo(courseVO);
         return ResultTO.buildSuccess(id);
+    }
+
+    @GetMapping("/getCourseInfo/{courseId}")
+    public ResultTO getCourseInfo(@PathVariable String courseId) {
+        CourseVO courseVO = courseService.getCourseInfo(courseId);
+        return ResultTO.buildSuccess(courseVO);
+    }
+
+    @PostMapping("/updateCourseInfo")
+    public ResultTO updateCourseInfo(@RequestBody CourseVO courseVO) {
+        courseService.updateCourseInfo(courseVO);
+        return ResultTO.buildSuccess("修改成功");
     }
 }
 

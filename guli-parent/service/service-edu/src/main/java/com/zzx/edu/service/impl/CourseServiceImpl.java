@@ -29,6 +29,19 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Override
     @Transactional(rollbackFor = GuliException.class)
+    public void updateCourseInfo(CourseVO courseVO) {
+        Course course = new Course();
+        BeanUtils.copyProperties(courseVO, course);
+        baseMapper.updateById(course);
+
+        CourseDescription courseDescription = new CourseDescription();
+        courseDescription.setId(courseVO.getId());
+        courseDescription.setDescription(courseVO.getDescription());
+        courseDescriptionMapper.updateById(courseDescription);
+    }
+
+    @Override
+    @Transactional(rollbackFor = GuliException.class)
     public String addCourseInfo(CourseVO courseVO) {
         // 获取course的部分数据插入到course表中
         Course course = new Course();
@@ -42,5 +55,19 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         courseDescriptionMapper.insert(courseDescription);
 
         return cid;
+    }
+
+    @Override
+    public CourseVO getCourseInfo(String courseId) {
+        // 根据courseId查询课程信息
+        Course course = baseMapper.selectById(courseId);
+        CourseVO courseVO = new CourseVO();
+        // 将course的属性复制到courseVO中
+        BeanUtils.copyProperties(course, courseVO);
+
+        CourseDescription courseDescription = courseDescriptionMapper.selectById(courseId);
+        courseVO.setDescription(courseDescription.getDescription());
+
+        return courseVO;
     }
 }

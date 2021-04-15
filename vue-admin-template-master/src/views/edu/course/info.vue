@@ -88,17 +88,51 @@
         BASE_API: process.env.BASE_API,
         teacherList: [],
         subjectOneList: [],
-        subjectTwoList: []
+        subjectTwoList: [],
+        courseId: '',
       }
     },
     created() {
-      // 得到讲师列表
-      this.getTeacherList();
-      // 得到所有分类列表
-      this.getOneSubject();
+      // 获取路由中的id值
+      if (this.$route.params && this.$route.params.id) {
+        this.courseId = this.$route.params.id;
+        // 调用方法得到courseInfo
+        this.getCourseInfo();
+      } else {
+        // 得到讲师列表
+        this.getTeacherList();
+        // 得到所有分类列表
+        this.getOneSubject();
+      }
     },
     methods: {
+      // 获得课程信息
+      getCourseInfo() {
+        course.getCourseInfo(this.courseId)
+          .then(response => {
+            this.courseInfo = response.data;
+            // 查询出所有的分类
+            subject.getAllSubjects()
+              .then(subjectResponse => {
+                this.subjectOneList = subjectResponse.data;
+                for (let i = 0; i < this.subjectOneList.length; i++) {
+                  if (this.subjectOneList[i].id === this.courseInfo.subjectParentId) {
+                    this.subjectTwoList = this.subjectOneList[i].children;
+                  }
+                }
+              });
+            // 得到讲师列表
+            this.getTeacherList();
+          });
+      },
       saveOrUpdate() {
+        if(this.courseInfo.id){
+          this.updateCourseInfo();
+        }else {
+          this.addCourseInfo();
+        }
+      },
+      addCourseInfo(){
         course.addCourseInfo(this.courseInfo)
           .then(response => {
             // 提示
@@ -108,6 +142,18 @@
             });
             // 跳转到第二页
             this.$router.push({path: '/course/chapter/' + response.data});
+          });
+      },
+      updateCourseInfo(){
+        course.updateCourseInfo(this.courseInfo)
+          .then(response => {
+            // 提示
+            this.$message({
+              type: 'success',
+              message: '修改课程信息成功'
+            });
+            // 跳转到第二页
+            this.$router.push({path: '/course/chapter/' + this.courseInfo.id});
           });
       },
       getTeacherList() {
@@ -153,7 +199,7 @@
 </script>
 
 <style scoped>
-.tinymce-container {
-  line-height: 29px;
-}
+  .tinymce-container {
+    line-height: 29px;
+  }
 </style>

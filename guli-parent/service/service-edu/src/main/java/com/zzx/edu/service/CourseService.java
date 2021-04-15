@@ -18,5 +18,5 @@ public interface CourseService extends IService<Course> {
      * 添加课程信息
      * @param courseVO
      */
-    void addCourseInfo(CourseVO courseVO);
+    String addCourseInfo(CourseVO courseVO);
 }

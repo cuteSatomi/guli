@@ -29,7 +29,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Override
     @Transactional(rollbackFor = GuliException.class)
-    public void addCourseInfo(CourseVO courseVO) {
+    public String addCourseInfo(CourseVO courseVO) {
         // 获取course的部分数据插入到course表中
         Course course = new Course();
         BeanUtils.copyProperties(courseVO, course);
@@ -40,5 +40,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         courseDescription.setDescription(courseVO.getDescription());
         courseDescription.setId(cid);
         courseDescriptionMapper.insert(courseDescription);
+
+        return cid;
     }
 }

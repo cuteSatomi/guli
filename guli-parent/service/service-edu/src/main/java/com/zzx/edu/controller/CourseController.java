@@ -24,8 +24,8 @@ public class CourseController {
 
     @PostMapping("/addCourseInfo")
     public ResultTO addCourseInfo(@RequestBody CourseVO courseVO){
-        courseService.addCourseInfo(courseVO);
-        return ResultTO.buildSuccess("插入课程信息成功");
+        String id = courseService.addCourseInfo(courseVO);
+        return ResultTO.buildSuccess(id);
     }
 }
 

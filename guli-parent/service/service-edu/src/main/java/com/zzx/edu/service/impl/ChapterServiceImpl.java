@@ -34,11 +34,11 @@ public class ChapterServiceImpl extends ServiceImpl<ChapterMapper, Chapter> impl
     public List<ChapterVO> getChapterVideoByCourseId(String courseId) {
         // 首先得到所有章节列表
         QueryWrapper<Chapter> chapterWrapper = new QueryWrapper<Chapter>();
-        chapterWrapper.eq("course_id",courseId);
+        chapterWrapper.eq("course_id", courseId);
         List<Chapter> chapterList = this.list(chapterWrapper);
         // 得到小节列表
         QueryWrapper<Video> videoWrapper = new QueryWrapper<Video>();
-        videoWrapper.eq("course_id",courseId);
+        videoWrapper.eq("course_id", courseId);
         List<Video> videoList = videoMapper.selectList(videoWrapper);
 
         List<ChapterVO> result = chapterList.stream().map(chapter -> {
@@ -56,5 +56,17 @@ public class ChapterServiceImpl extends ServiceImpl<ChapterMapper, Chapter> impl
             chapterVO.setChildren(videoVOList);
         }
         return result;
+    }
+
+    @Override
+    public boolean deleteChapter(String chapterId) {
+        // 根据chapterId查询小节
+        QueryWrapper<Video> videoWrapper = new QueryWrapper<>();
+        videoWrapper.eq("chapter_id", chapterId);
+        Integer count = videoMapper.selectCount(videoWrapper);
+        if (count > 0) {
+            return false;
+        }
+        return this.removeById(chapterId);
     }
 }

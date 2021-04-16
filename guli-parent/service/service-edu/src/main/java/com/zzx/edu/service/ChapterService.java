@@ -18,8 +18,17 @@ public interface ChapterService extends IService<Chapter> {
 
     /**
      * 得到章节及其小节
+     *
      * @param courseId
      * @return
      */
     List<ChapterVO> getChapterVideoByCourseId(String courseId);
+
+    /**
+     * 删除章节
+     *
+     * @param chapterId
+     * @return
+     */
+    boolean deleteChapter(String chapterId);
 }

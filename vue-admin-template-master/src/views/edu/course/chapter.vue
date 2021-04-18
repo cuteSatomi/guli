@@ -28,8 +28,10 @@
             <p>
               {{video.title}}
               <span class="acts">
-                <el-button size="mini" type="primary" icon="el-icon-edit" circle @click="openEditVideoDialog(video.id)"></el-button>
-                <el-button size="mini" type="danger" icon="el-icon-delete" circle @click="deleteVideo(video.id)"></el-button>
+                <el-button size="mini" type="primary" icon="el-icon-edit" circle
+                           @click="openEditVideoDialog(video.id)"></el-button>
+                <el-button size="mini" type="danger" icon="el-icon-delete" circle
+                           @click="deleteVideo(video.id)"></el-button>
               </span>
             </p>
           </li>
@@ -98,7 +100,7 @@
         dialogChapterFormVisible: false,
         dialogVideoFormVisible: false,
         dialogTitle: '',
-        dialogVideoTitle:'',
+        dialogVideoTitle: '',
         chapterList: [],
         courseId: '',
         chapter: {
@@ -123,7 +125,7 @@
     methods: {
       /***************************************小节方法***************************************/
       // 点击弹出修改小节dialog
-      openEditVideoDialog(videoId){
+      openEditVideoDialog(videoId) {
         this.dialogTitle = '修改小节';
         video.getVideoById(videoId)
           .then(response => {
@@ -131,7 +133,7 @@
             this.dialogVideoFormVisible = true;
           });
       },
-      deleteVideo(videoId){
+      deleteVideo(videoId) {
         this.$confirm('此操作将永久删除小节记录，是否继续？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -161,9 +163,9 @@
       },
       // 添加或修改小节
       saveOrUpdateVideo() {
-        if(!this.video.id){
+        if (!this.video.id) {
           this.addVideo();
-        }else {
+        } else {
           this.updateVideo();
         }
       },
@@ -185,9 +187,9 @@
             this.getChapterVideo();
           });
       },
-      updateVideo(){
+      updateVideo() {
         video.updateVideo(this.video)
-          .then(response=>{
+          .then(response => {
             // 关闭弹框
             this.dialogVideoFormVisible = false;
             // 显示提示信息
@@ -215,7 +217,7 @@
               // 删除成功显示提示信息
               this.$message({
                 type: 'success',
-                message: '删除章节成功'
+                message: "删除成功"
               });
               // 回到列表页面
               this.getChapterVideo();
@@ -285,7 +287,7 @@
         this.$router.push({path: '/course/info/' + this.courseId});
       },
       next() {
-        this.$router.push({path: '/course/publish/1'});
+        this.$router.push({path: '/course/publish/' + this.courseId});
       },
       // 得到所有章节以及小节
       getChapterVideo() {

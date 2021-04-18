@@ -3,6 +3,7 @@ package com.zzx.edu.service.impl;
 import com.zzx.base.exception.GuliException;
 import com.zzx.edu.entity.Course;
 import com.zzx.edu.entity.CourseDescription;
+import com.zzx.edu.entity.vo.CoursePublishVO;
 import com.zzx.edu.entity.vo.CourseVO;
 import com.zzx.edu.mapper.CourseDescriptionMapper;
 import com.zzx.edu.mapper.CourseMapper;
@@ -69,5 +70,10 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         courseVO.setDescription(courseDescription.getDescription());
 
         return courseVO;
+    }
+
+    @Override
+    public CoursePublishVO getPublishCourseInfo(String courseId) {
+        return baseMapper.getPublishCourseInfo(courseId);
     }
 }

@@ -2,4 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zzx.edu.mapper.CourseMapper">
 
+    <select id="getPublishCourseInfo" resultType="com.zzx.edu.entity.vo.CoursePublishVO">
+        SELECT ta01.id, ta01.title, ta01.cover, ta02.NAME as teacherName, ta04.title AS subjectLevelOne,
+			ta03.title AS subjectLevelTwo, ta01.price, ta01.lesson_num as lessonNum
+		FROM
+			edu_course ta01
+				LEFT JOIN edu_teacher ta02 ON ta01.teacher_id = ta02.id
+				LEFT JOIN edu_subject ta03 ON ta01.subject_id = ta03.id
+				LEFT JOIN edu_subject ta04 ON ta01.subject_parent_id = ta04.id
+		WHERE
+			ta01.id = #{courseId}
+    </select>
 </mapper>

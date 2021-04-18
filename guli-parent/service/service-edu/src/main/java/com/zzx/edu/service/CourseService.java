@@ -2,6 +2,7 @@ package com.zzx.edu.service;
 
 import com.zzx.edu.entity.Course;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zzx.edu.entity.vo.CoursePublishVO;
 import com.zzx.edu.entity.vo.CourseVO;
 
 /**
@@ -35,4 +36,11 @@ public interface CourseService extends IService<Course> {
      * @param courseVO
      */
     void updateCourseInfo(CourseVO courseVO);
+
+    /**
+     * 在发布页查询的课程信息
+     * @param courseId
+     * @return
+     */
+    CoursePublishVO getPublishCourseInfo(String courseId);
 }

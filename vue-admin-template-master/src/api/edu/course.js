@@ -41,6 +41,48 @@ export default {
       method: 'post',
       data: courseInfo
     });
-  }
-
+  },
+  /**
+   * 根据课程id查询发布页的课程信息
+   * @param courseId
+   */
+  getPublishCourseInfo(courseId) {
+    return request({
+      url: `/edu/service/course/getPublishCourseInfo/${courseId}`,
+      method: 'get'
+    });
+  },
+  /**
+   * 课程最终发布
+   * @param courseId
+   */
+  publishCourse(courseId) {
+    return request({
+      url: `/edu/service/course/publishCourse/${courseId}`,
+      method: 'post'
+    });
+  },
+  /**
+   * 查询课程列表
+   */
+  listAllCourse(){
+    return request({
+      url: `/edu/service/course/findAll`,
+      method: 'get'
+    });
+  },
+  /**
+   * 分页查询课程列表
+   * @param current       当前页
+   * @param size          每页大小
+   * @param teacherQuery  查询条件
+   */
+  getCourseListPage(current, size, courseQuery) {
+    return request({
+      url: `/edu/service/course/pageCourseCondition/${current}/${size}`,
+      method: 'post',
+      // data表示将teacherQuery转换为JSON传递到后端接口中
+      data: courseQuery
+    });
+  },
 }

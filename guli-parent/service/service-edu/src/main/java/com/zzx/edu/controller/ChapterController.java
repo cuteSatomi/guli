@@ -52,7 +52,7 @@ public class ChapterController {
     @DeleteMapping("/{chapterId}")
     public ResultTO deleteChapterById(@PathVariable String chapterId) {
         boolean flag = chapterService.deleteChapter(chapterId);
-        return flag ? ResultTO.buildSuccess("删除成功") : ResultTO.buildFailed("删除失败");
+        return flag ? ResultTO.buildSuccess("删除成功") : ResultTO.buildFailed("该章节内还存在所属小节，删除失败");
     }
 }
 

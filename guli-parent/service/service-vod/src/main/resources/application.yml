@@ -1,0 +1,11 @@
+# 服务端口
+server:
+  port: 8003
+
+# 服务名
+spring:
+  application:
+    name: service-vod
+  # 环境设置
+  profiles:
+    active: dev

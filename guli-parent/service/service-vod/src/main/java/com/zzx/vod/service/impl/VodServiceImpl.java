@@ -9,11 +9,13 @@ import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
 import com.zzx.vod.config.InitVodClient;
 import com.zzx.vod.config.VodConfig;
 import com.zzx.vod.service.VodService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author zzx
@@ -48,10 +50,19 @@ public class VodServiceImpl implements VodService {
     }
 
     @Override
-    public void RemoveVideoById(String videoId) throws ClientException {
+    public void removeVideoById(String videoId) throws ClientException {
         DefaultAcsClient client = InitVodClient.init(VodConfig.KEY_ID, VodConfig.KEY_SECRET);
         DeleteVideoRequest request = new DeleteVideoRequest();
         request.setVideoIds(videoId);
+        client.getAcsResponse(request);
+    }
+
+    @Override
+    public void deleteBatchVideo(List videoIdList) throws ClientException {
+        DefaultAcsClient client = InitVodClient.init(VodConfig.KEY_ID, VodConfig.KEY_SECRET);
+        DeleteVideoRequest request = new DeleteVideoRequest();
+        String videoIds = StringUtils.join(videoIdList.toArray(), ",");
+        request.setVideoIds(videoIds);
         client.getAcsResponse(request);
     }
 }

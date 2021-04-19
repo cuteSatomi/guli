@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * @author zzx
  * @date 2021-04-19 10:50:08
@@ -32,14 +34,36 @@ public class VodController {
         return ResultTO.buildSuccess(videoId);
     }
 
+    /**
+     * 根据videoId删除阿里云视频
+     *
+     * @param videoId
+     * @return
+     */
     @DeleteMapping("/removeVideo/{videoId}")
-    public ResultTO RemoveVideoById(@PathVariable String videoId) {
+    public ResultTO removeVideoById(@PathVariable String videoId) {
         try {
-            vodService.RemoveVideoById(videoId);
+            vodService.removeVideoById(videoId);
             return ResultTO.buildSuccess("删除视频成功");
         } catch (Exception e) {
             e.printStackTrace();
             throw new GuliException(ResultCode.ERROR, "删除视频失败");
+        }
+    }
+
+    /**
+     * 根据视频id字符串批量删除阿里云视频
+     * @param videoIdList
+     * @return
+     */
+    @DeleteMapping("/deleteBatch")
+    public ResultTO deleteBatch(@RequestParam("videoIdList") List videoIdList) {
+        try {
+            vodService.deleteBatchVideo(videoIdList);
+            return ResultTO.buildSuccess("批量删除视频成功");
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw new GuliException(ResultCode.ERROR, "批量删除视频失败");
         }
     }
 }

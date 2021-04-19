@@ -18,6 +18,11 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  # nacos的配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
 
 # 返回json的全局时间格式
 

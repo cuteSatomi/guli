@@ -1,9 +1,11 @@
 package com.zzx.edu.controller;
 
 
+import com.zzx.edu.client.VodClient;
 import com.zzx.edu.entity.Video;
 import com.zzx.edu.service.VideoService;
 import com.zzx.utils.ResultTO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +23,9 @@ import org.springframework.web.bind.annotation.*;
 public class VideoController {
     @Autowired
     private VideoService videoService;
+
+    @Autowired
+    private VodClient vodClient;
 
     @PostMapping("/addVideo")
     public ResultTO addVideo(@RequestBody Video video) {
@@ -42,6 +47,13 @@ public class VideoController {
 
     @DeleteMapping("/{videoId}")
     public ResultTO deleteVideoById(@PathVariable String videoId) {
+        Video video = videoService.getById(videoId);
+        String videoSourceId = video.getVideoSourceId();
+        // 根据videoSourceId调用远程接口删除阿里云视频
+        if(StringUtils.isNotBlank(videoSourceId)){
+            vodClient.removeVideoById(videoSourceId);
+        }
+
         videoService.removeById(videoId);
         return ResultTO.buildSuccess("删除小节成功");
     }

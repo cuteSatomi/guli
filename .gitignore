@@ -22,6 +22,7 @@ target/
 **/*.ipr
 
 **/OssConfig.java
+**/VodConfig.java
 
 
 ### NetBeans ###

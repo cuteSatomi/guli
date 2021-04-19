@@ -43,5 +43,15 @@ export default {
       url: `/edu/service/video/${videoId}`,
       method: 'delete'
     });
+  },
+  /**
+   * 根据id删除阿里云的视频
+   * @param videoId
+   */
+  removeAlyVideo(videoId) {
+    return request({
+      url: `/edu/vod/removeVideo/${videoId}`,
+      method: 'delete'
+    });
   }
 }

@@ -1,6 +1,7 @@
 package com.zzx.edu.controller;
 
 
+import com.zzx.base.exception.GuliException;
 import com.zzx.edu.client.VodClient;
 import com.zzx.edu.entity.Video;
 import com.zzx.edu.service.VideoService;
@@ -50,8 +51,11 @@ public class VideoController {
         Video video = videoService.getById(videoId);
         String videoSourceId = video.getVideoSourceId();
         // 根据videoSourceId调用远程接口删除阿里云视频
-        if(StringUtils.isNotBlank(videoSourceId)){
-            vodClient.removeVideoById(videoSourceId);
+        if (StringUtils.isNotBlank(videoSourceId)) {
+            ResultTO result = vodClient.removeVideoById(videoSourceId);
+            if (result.getCode() == 20001) {
+                throw new GuliException(20001, "删除视频失败，熔断触发");
+            }
         }
 
         videoService.removeById(videoId);

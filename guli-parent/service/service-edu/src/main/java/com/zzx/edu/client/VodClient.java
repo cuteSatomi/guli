@@ -14,7 +14,7 @@ import java.util.List;
  * @date 2021-04-19 21:01
  */
 @Component
-@FeignClient("service-vod")
+@FeignClient(name = "service-vod", fallback = VodFileDegradeFeignClient.class)
 public interface VodClient {
     /**
      * 根据videoId删除阿里云视频
@@ -27,9 +27,10 @@ public interface VodClient {
 
     /**
      * 根据视频id字符串批量删除阿里云视频
+     *
      * @param videoIdList
      * @return
      */
     @DeleteMapping("/edu/vod/deleteBatch")
-    ResultTO deleteBatch(@RequestParam("videoIdList") List videoIdList);
+    ResultTO deleteBatch(@RequestParam("videoIdList") List<String> videoIdList);
 }

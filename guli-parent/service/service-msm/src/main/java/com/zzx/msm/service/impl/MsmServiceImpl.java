@@ -22,8 +22,9 @@ import java.util.Map;
 public class MsmServiceImpl implements MsmService {
     @Override
     public boolean sendMsm(String phone, Map<String, Object> param) {
-        if (StringUtils.isEmpty(phone))
+        if (StringUtils.isEmpty(phone)) {
             return false;
+        }
 
         DefaultProfile profile =
                 DefaultProfile.getProfile("default", MsmConfig.KEY_ID, MsmConfig.KEY_SECRET);
@@ -38,16 +39,15 @@ public class MsmServiceImpl implements MsmService {
         request.setAction("SendSms");
 
         //设置发送相关的参数
-        request.putQueryParameter("PhoneNumbers", phone); //手机号
-        request.putQueryParameter("SignName", "乐优商城"); //申请阿里云 签名名称
-        request.putQueryParameter("TemplateCode", "SMS_203672955"); //申请阿里云 模板code
-        request.putQueryParameter("TemplateParam", JSONObject.toJSONString(param)); //验证码数据，转换json数据传递
+        request.putQueryParameter("PhoneNumbers", phone);
+        request.putQueryParameter("SignName", MsmConfig.SIGN_NAME);
+        request.putQueryParameter("TemplateCode", MsmConfig.TEMPLATE);
+        request.putQueryParameter("TemplateParam", JSONObject.toJSONString(param));
 
         try {
             //最终发送
             CommonResponse response = client.getCommonResponse(request);
-            boolean success = response.getHttpResponse().isSuccess();
-            return success;
+            return response.getHttpResponse().isSuccess();
         } catch (Exception e) {
             e.printStackTrace();
             return false;

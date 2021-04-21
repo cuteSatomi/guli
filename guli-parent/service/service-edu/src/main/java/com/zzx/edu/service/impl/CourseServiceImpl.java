@@ -1,5 +1,6 @@
 package com.zzx.edu.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zzx.base.exception.GuliException;
 import com.zzx.edu.entity.Course;
 import com.zzx.edu.entity.CourseDescription;
@@ -13,6 +14,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * <p>
@@ -75,5 +78,13 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     @Override
     public CoursePublishVO getPublishCourseInfo(String courseId) {
         return baseMapper.getPublishCourseInfo(courseId);
+    }
+
+    @Override
+    public List<Course> query8Courses() {
+        QueryWrapper<Course> queryWrapper = new QueryWrapper<Course>();
+        queryWrapper.orderByDesc("view_count");
+        queryWrapper.last("limit 8");
+        return baseMapper.selectList(queryWrapper);
     }
 }

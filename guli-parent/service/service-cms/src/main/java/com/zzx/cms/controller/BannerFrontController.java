@@ -28,7 +28,7 @@ public class BannerFrontController {
      */
     @GetMapping("/listBanner")
     public ResultTO listBanner() {
-        List<Banner> bannerList = bannerService.list(null);
+        List<Banner> bannerList = bannerService.selectBanner();
         return ResultTO.buildSuccess(bannerList);
     }
 }

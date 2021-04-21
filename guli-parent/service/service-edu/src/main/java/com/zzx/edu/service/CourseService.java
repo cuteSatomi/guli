@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzx.edu.entity.vo.CoursePublishVO;
 import com.zzx.edu.entity.vo.CourseVO;
 
+import java.util.List;
+
 /**
  * <p>
  * 课程 服务类
@@ -43,4 +45,10 @@ public interface CourseService extends IService<Course> {
      * @return
      */
     CoursePublishVO getPublishCourseInfo(String courseId);
+
+    /**
+     * 查询前8个热门课程
+     * @return
+     */
+    List<Course> query8Courses();
 }

@@ -1,17 +1,11 @@
 # 服务端口
 server:
-  port: 8004
+  port: 8005
 
 # 服务名称
 spring:
   application:
-    name: service-cms
-  # mysql数据库链接参数
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql:///guli?serverTimezone=GMT%2B8
-    username: root
-    password: 123
+    name: service-msm
   # 返回json的全局时间格式
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
@@ -34,9 +28,7 @@ spring:
         max-idle: 5
         min-idle: 0
 
-# mybatis的xml文件路径
 mybatis-plus:
-  mapper-locations: classpath*:/mapper/*Mapper.xml
   # mybatis日志
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

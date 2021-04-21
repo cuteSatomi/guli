@@ -23,6 +23,7 @@ target/
 
 **/OssConfig.java
 **/VodConfig.java
+**/MsmConfig.java
 
 
 ### NetBeans ###

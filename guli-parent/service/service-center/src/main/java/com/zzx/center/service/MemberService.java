@@ -28,4 +28,11 @@ public interface MemberService extends IService<Member> {
      * @param registerVO
      */
     void register(RegisterVO registerVO);
+
+    /**
+     * 根据微信openid查询member
+     * @param openid
+     * @return
+     */
+    Member selectMemberByOpenid(String openid);
 }

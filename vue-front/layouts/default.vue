@@ -125,6 +125,7 @@
   import "~/assets/css/web.css";
 
   import cookie from 'js-cookie';
+  import loginApi from "@/api/login";
 
 
   export default {
@@ -142,9 +143,25 @@
       }
     },
     created() {
+      // 取到token并赋值
+      this.token = this.$route.query.token;
+      if (this.token) {
+        this.wxLogin();
+      }
       this.showInfo();
     },
     methods: {
+      wxLogin() {
+        cookie.set('guli_token', this.token, {domain: 'localhost'});
+        cookie.set('guli_member', '', {domain: 'localhost'});
+        console.log("====token=====",cookie.get("guli_token"))
+        loginApi.getMemberInfo()
+          .then(response => {
+            console.log("====response=====",response)
+            this.loginInfo = response.data.data;
+            cookie.set('guli_member', this.loginInfo, {domain: 'localhost'});
+          });
+      },
       // 退出
       logout() {
         // 清空cookie，回到主页面

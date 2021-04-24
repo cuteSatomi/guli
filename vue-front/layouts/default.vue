@@ -154,10 +154,8 @@
       wxLogin() {
         cookie.set('guli_token', this.token, {domain: 'localhost'});
         cookie.set('guli_member', '', {domain: 'localhost'});
-        console.log("====token=====",cookie.get("guli_token"))
         loginApi.getMemberInfo()
           .then(response => {
-            console.log("====response=====",response)
             this.loginInfo = response.data.data;
             cookie.set('guli_member', this.loginInfo, {domain: 'localhost'});
           });

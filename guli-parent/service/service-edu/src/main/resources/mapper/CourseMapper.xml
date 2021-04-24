@@ -13,4 +13,19 @@
 		WHERE
 			ta01.id = #{courseId}
     </select>
+
+    <select id="getBaseCourseInfo" resultType="com.zzx.edu.entity.frontvo.FrontCourseDetailsVO">
+		SELECT ta01.id, ta01.title, ta01.cover, ta02.NAME as teacherName, ta04.title AS subjectLevelOne, ta04.id AS subjectLevelOneId,
+			ta01.buy_count AS buyCount, ta01.view_count AS viewCount, ta05.description,
+			ta02.id AS teacherId, ta02.name AS teacherName, ta02.intro, ta02.avatar,
+			ta03.title AS subjectLevelTwo, ta03.id AS subjectLevelTwoId, ta01.price, ta01.lesson_num as lessonNum
+		FROM
+			edu_course ta01
+				LEFT JOIN edu_teacher ta02 ON ta01.teacher_id = ta02.id
+				LEFT JOIN edu_subject ta03 ON ta01.subject_id = ta03.id
+				LEFT JOIN edu_subject ta04 ON ta01.subject_parent_id = ta04.id
+				LEFT JOIN edu_course_description ta05 on ta01.id = ta05.id
+		WHERE
+			ta01.id = #{courseId}
+	</select>
 </mapper>

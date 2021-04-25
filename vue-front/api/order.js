@@ -2,11 +2,21 @@ import request from '@/utils/request'
 
 export default {
   /**
-   * 得到首页课程和讲师数据
+   * 生成订单
    */
-  getIndex() {
+  createOrder(courseId) {
     return request({
-      url: '/edu/service/front/index',
+      url: `/edu/order/createOrder/${courseId}`,
+      method: 'get'
+    });
+  },
+  /**
+   * 根据订单号查询订单
+   * @param orderNo
+   */
+  getOrderInfo(orderNo) {
+    return request({
+      url: `/edu/order/getOrderInfo/${orderNo}`,
       method: 'get'
     });
   }

@@ -12,10 +12,10 @@
       <div>
         <article class="c-v-pic-wrap" style="height: 357px;">
           <section class="p-h-video-box" id="videoPlay">
-            <img height="260px" :src="courseDetailsVO.cover" :alt="courseDetailsVO.subjectLevelTwo" class="dis c-v-pic">
+            <img height="100%" :src="courseDetailsVO.cover" :alt="courseDetailsVO.subjectLevelTwo" class="dis c-v-pic">
           </section>
         </article>
-        <aside class="c-attr-wrap" >
+        <aside class="c-attr-wrap">
           <section class="ml20 mr15">
             <h2 class="hLh30 txtOf mt15">
               <span class="c-fff fsize24">{{courseDetailsVO.subjectLevelTwo}}</span>
@@ -30,11 +30,11 @@
             <section class="c-attr-mt of">
               <span class="ml10 vam">
                 <em class="icon18 scIcon"></em>
-                <a class="c-fff vam" title="收藏" href="#" >收藏</a>
+                <a class="c-fff vam" title="收藏" href="#">收藏</a>
               </span>
             </section>
             <section class="c-attr-mt">
-              <a href="#" title="立即观看" class="comm-btn c-btn-3">立即观看</a>
+              <a @click="createOrder" href="#" title="立即购买" class="comm-btn c-btn-3">立即购买</a>
             </section>
           </section>
         </aside>
@@ -81,7 +81,7 @@
               <article class="ml10 mr10 pt20">
                 <div>
                   <h6 class="c-i-content c-infor-title">
-                    <span >课程介绍</span>
+                    <span>课程介绍</span>
                   </h6>
                   <div class="course-txt-body-wrap">
                     <section class="course-txt-body">
@@ -106,7 +106,7 @@
                             </a>
                             <ol class="lh-menu-ol" style="display: block;">
                               <li class="lh-menu-second ml30" v-for="video in chapter.children" :key="video.id">
-                                <a href="#" title>
+                                <a :href="'/player/'+video.videoSourceId" target="_blank">
                                   <span class="fr">
                                     <i class="free-icon vam mr10">免费试听</i>
                                   </span>
@@ -159,14 +159,27 @@
 </template>
 <script>
   import courseApi from "@/api/course";
+  import orderApi from "@/api/order";
+
   export default {
     asyncData({params, error}) {
       return courseApi.getCourseInfo(params.id).then(response => {
         return {
           courseDetailsVO: response.data.data.courseDetailsVO,
-          chapterVideoList: response.data.data.chapterVideoList
+          chapterVideoList: response.data.data.chapterVideoList,
+          courseId: params.id
         };
       });
     },
+    methods: {
+      // 生成订单
+      createOrder() {
+        orderApi.createOrder(this.courseId)
+          .then(response => {
+            // 生成订单后跳转到订单详情页面
+            this.$router.push({path: '/order/' + response.data.data});
+          });
+      }
+    }
   };
 </script>

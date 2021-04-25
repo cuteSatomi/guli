@@ -6,6 +6,8 @@ import com.zzx.center.entity.vo.RegisterVO;
 import com.zzx.center.service.MemberService;
 import com.zzx.utils.JwtUtils;
 import com.zzx.utils.ResultTO;
+import com.zzx.utils.ordervo.OrderMember;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,6 +64,20 @@ public class MemberController {
         String memberId = JwtUtils.getMemberIdByJwtToken(request);
         Member member = memberService.getById(memberId);
         return ResultTO.buildSuccess(member);
+    }
+
+    /**
+     * 根据用户id得到订单的用户信息
+     *
+     * @param memberId
+     * @return
+     */
+    @GetMapping("/getOrderMemberInfo/{memberId}")
+    public OrderMember getOrderMemberInfo(@PathVariable String memberId) {
+        Member member = memberService.getById(memberId);
+        OrderMember orderMember = new OrderMember();
+        BeanUtils.copyProperties(member, orderMember);
+        return orderMember;
     }
 }
 

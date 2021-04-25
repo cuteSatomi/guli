@@ -6,6 +6,8 @@ import com.zzx.edu.entity.vo.ChapterVO;
 import com.zzx.edu.service.ChapterService;
 import com.zzx.edu.service.CourseService;
 import com.zzx.utils.ResultTO;
+import com.zzx.utils.ordervo.OrderCourse;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,5 +55,18 @@ public class CourseFrontController {
         map.put("courseDetailsVO", courseDetailsVO);
         map.put("chapterVideoList", chapterVideoList);
         return ResultTO.buildSuccess(map);
+    }
+
+    /**
+     * 根据课程id查询课程相关信息
+     * @param courseId
+     * @return
+     */
+    @GetMapping("/getOrderCourseInfo/{courseId}")
+    public OrderCourse getOrderCourseInfo(@PathVariable String courseId) {
+        FrontCourseDetailsVO courseDetails = courseService.getBaseCourseInfo(courseId);
+        OrderCourse orderCourse = new OrderCourse();
+        BeanUtils.copyProperties(courseDetails, orderCourse);
+        return orderCourse;
     }
 }

@@ -33,13 +33,16 @@
                 <a class="c-fff vam" title="收藏" href="#">收藏</a>
               </span>
             </section>
-            <section class="c-attr-mt">
+            <section v-if="isBuy || Number(courseDetailsVO.price)==0" class="c-attr-mt">
+              <a @click="createOrder" href="#" title="立即观看" class="comm-btn c-btn-3">立即观看</a>
+            </section>
+            <section v-else class="c-attr-mt">
               <a @click="createOrder" href="#" title="立即购买" class="comm-btn c-btn-3">立即购买</a>
             </section>
           </section>
         </aside>
         <aside class="thr-attr-box">
-          <ol class="thr-attr-ol clearfix">
+          <ol class="thr-attr-ol">
             <li>
               <p>&nbsp;</p>
               <aside>
@@ -163,15 +166,31 @@
 
   export default {
     asyncData({params, error}) {
-      return courseApi.getCourseInfo(params.id).then(response => {
-        return {
-          courseDetailsVO: response.data.data.courseDetailsVO,
-          chapterVideoList: response.data.data.chapterVideoList,
-          courseId: params.id
-        };
-      });
+      return {
+        courseId: params.id
+      }
+    },
+    data() {
+      return {
+        courseDetailsVO: {},
+        chapterVideoList: [],
+        isBuy: false
+      }
+    },
+    created() {
+
+      this.getCourseInfo();
     },
     methods: {
+      // 查询课程信息
+      getCourseInfo() {
+        courseApi.getCourseInfo(this.courseId)
+          .then(response => {
+            this.courseDetailsVO = response.data.data.courseDetailsVO;
+            this.chapterVideoList = response.data.data.chapterVideoList;
+            this.isBuy = response.data.data.isBuy;
+          });
+      },
       // 生成订单
       createOrder() {
         orderApi.createOrder(this.courseId)

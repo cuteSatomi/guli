@@ -29,6 +29,11 @@ public class ResultTO<T> {
         this.data = data;
     }
 
+    public ResultTO setCode(Integer code) {
+        this.code = code;
+        return this;
+    }
+
     public static <K> ResultTO<K> buildSuccess(K data) {
         ResultTO<K> result = new ResultTO<>();
         result.setSuccess(true);

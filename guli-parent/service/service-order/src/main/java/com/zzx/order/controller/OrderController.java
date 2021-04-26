@@ -29,6 +29,7 @@ public class OrderController {
 
     /**
      * 生成订单
+     *
      * @param courseId
      * @param request
      * @return
@@ -42,15 +43,33 @@ public class OrderController {
 
     /**
      * 根据订单号查询订单
+     *
      * @param orderNo
      * @return
      */
     @GetMapping("/getOrderInfo/{orderNo}")
-    public ResultTO getOrderInfo(@PathVariable String orderNo){
+    public ResultTO getOrderInfo(@PathVariable String orderNo) {
         QueryWrapper<Order> wrapper = new QueryWrapper<Order>();
-        wrapper.eq("order_no",orderNo);
+        wrapper.eq("order_no", orderNo);
         Order order = orderService.getOne(wrapper);
         return ResultTO.buildSuccess(order);
+    }
+
+    /**
+     * 查询用户是否购买了当前课程
+     *
+     * @param courseId
+     * @param memberId
+     * @return
+     */
+    @GetMapping("/courseIsBuy/{courseId}/{memberId}")
+    public boolean courseIsBuy(@PathVariable String courseId, @PathVariable String memberId) {
+        QueryWrapper<Order> wrapper = new QueryWrapper<Order>();
+        wrapper.eq("course_id", courseId);
+        wrapper.eq("member_id", memberId);
+        wrapper.eq("status", 1);
+        int count = orderService.count(wrapper);
+        return count > 0;
     }
 }
 

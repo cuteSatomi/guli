@@ -35,4 +35,11 @@ public interface MemberService extends IService<Member> {
      * @return
      */
     Member selectMemberByOpenid(String openid);
+
+    /**
+     * 查询某一天的注册人数
+     *
+     * @return
+     */
+    Integer countRegister(String day);
 }

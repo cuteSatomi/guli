@@ -19,5 +19,25 @@ export default {
       url: `/edu/order/getOrderInfo/${orderNo}`,
       method: 'get'
     });
+  },
+  /**
+   * 根据订单号生成微信支付二维码
+   * @param orderNo
+   */
+  createQR(orderNo){
+    return request({
+      url: `/edu/order/paylog/createQR/${orderNo}`,
+      method: 'get'
+    });
+  },
+  /**
+   * 根据订单号查询订单状态
+   * @param orderNo
+   */
+  queryPayStatus(orderNo){
+    return request({
+      url: `/edu/order/paylog/queryPayStatus/${orderNo}`,
+      method: 'get'
+    });
   }
 }

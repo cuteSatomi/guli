@@ -85,6 +85,12 @@
         };
       });
     },
+    methods: {
+      // 点击去支付按钮调用的方法
+      toPay() {
+        this.$router.push({path: '/pay/' + this.order.orderNo});
+      }
+    }
   }
 </script>
 

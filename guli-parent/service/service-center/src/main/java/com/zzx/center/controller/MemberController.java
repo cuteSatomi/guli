@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author zzx
  * @since 2021-04-21
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/center/member")
 public class MemberController {

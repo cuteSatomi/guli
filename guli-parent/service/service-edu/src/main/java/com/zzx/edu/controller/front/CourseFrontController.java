@@ -19,7 +19,6 @@ import java.util.Map;
  * @author zzx
  * @date 2021-04-24 13:06
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/edu/service/front/course")
 public class CourseFrontController {

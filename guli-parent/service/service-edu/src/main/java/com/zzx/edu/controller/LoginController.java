@@ -10,7 +10,6 @@ import java.util.Map;
  * @author zzx
  * @date 2021-04-12 15:44:44
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/edu/service/user")
 public class LoginController {

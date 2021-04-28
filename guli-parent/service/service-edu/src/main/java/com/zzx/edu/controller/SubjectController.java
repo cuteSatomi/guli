@@ -18,7 +18,6 @@ import java.util.List;
  * @author zzx
  * @since 2021-04-13
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/edu/service/subject")
 public class SubjectController {
